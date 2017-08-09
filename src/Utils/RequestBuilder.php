@@ -79,11 +79,24 @@ class RequestBuilder
 
     /**
      * Add a filter to only show models that are deleted.
+     *
      * @return $this
      */
     public function deletedOnly()
     {
         $this->parameters['deletedOnly'] = 'true';
+
+        return $this;
+    }
+
+    /**
+     * Remove the filter that only show models that are deleted.
+     *
+     * @return $this
+     */
+    public function notDeletedOnly()
+    {
+        unset($this->parameters['deletedOnly']);
 
         return $this;
     }
@@ -200,5 +213,23 @@ class RequestBuilder
 	 */
     public function getSelectedFields() {
     	return $this->parameters['fields'] ?? null;
+    }
+
+	/**
+	 * Returns deletedOnly state
+	 *
+	 * @return string
+	 */
+    public function getDeletedOnlyState() {
+    	return $this->parameters['deletedOnly'] ?? 'false';
+    }
+
+	/**
+	 * Returns changes since
+	 *
+	 * @return string|null
+	 */
+    public function getChangesSince() {
+    	return $this->parameters['changesSince'] ?? null;
     }
 }

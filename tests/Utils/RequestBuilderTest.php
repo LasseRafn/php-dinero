@@ -54,4 +54,17 @@ class RequestBuilderTest extends TestCase
 
 		$this->assertEquals(['id', 'name'], $this->builder->getSelectedFields());
 	}
+
+	/** @test */
+	public function can_get_deleted_only() {
+		$this->assertEquals('false', $this->builder->getDeletedOnlyState());
+
+		$this->builder->deletedOnly();
+
+		$this->assertEquals('true', $this->builder->getDeletedOnlyState());
+
+		$this->builder->notDeletedOnly();
+
+		$this->assertEquals('false', $this->builder->getDeletedOnlyState());
+	}
 }
