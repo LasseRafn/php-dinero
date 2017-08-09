@@ -45,6 +45,7 @@ class RequestBuilder
 
     /**
      * Used for pagination, to set current page.
+     * Starts at zero.
      *
      * @param $page
      *
@@ -145,13 +146,14 @@ class RequestBuilder
     public function all($sleep = true)
     {
         $items = [];
+        $this->page(0);
 
         while (count($response = $this->builder->get($this->buildParameters())) > 0) {
             foreach ($response as $item) {
                 $items[] = $item;
             }
 
-            $this->page($this->parameters['page'] + 1);
+            $this->page($this->getPage() + 1);
 
             if ($sleep) {
                 usleep(200);
