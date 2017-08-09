@@ -16,7 +16,7 @@ class PaginatedResponseTest extends TestCase
 	public function can_return_a_paginated_response_on_get()
 	{
 		$expectedResponse = [
-			'Collection' => [],
+			'Collection' => [[]],
 			'Pagination' => [
 				'Page'                => 1,
 				'PageSize'            => 50,
@@ -36,7 +36,7 @@ class PaginatedResponseTest extends TestCase
 
 		$response = $builder->get();
 
-		$this->assertCount(0, $response->items);
+		$this->assertCount(1, $response->items);
 		$this->assertEquals(1, $response->page);
 		$this->assertEquals(50, $response->pageSize);
 		$this->assertEquals(1000, $response->maxPageSizeAllowed);
