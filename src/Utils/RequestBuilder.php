@@ -59,6 +59,7 @@ class RequestBuilder
 
     /**
      * Used for pagination, to set pagesize.
+     * Default: 100, max: 1000
      *
      * @param $pageSize
      *
@@ -66,6 +67,10 @@ class RequestBuilder
      */
     public function perPage($pageSize)
     {
+    	if($pageSize > 1000) {
+    		$pageSize = 1000;
+	    }
+
         $this->parameters['pageSize'] = $pageSize;
 
         return $this;
