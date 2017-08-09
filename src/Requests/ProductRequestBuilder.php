@@ -14,13 +14,13 @@ class ProductRequestBuilder extends RequestBuilder
         parent::__construct($builder);
     }
 
-	/**
-	 * Free-text search.
-	 *
-	 * @param $query
-	 *
-	 * @return $this
-	 */
+    /**
+     * Free-text search.
+     *
+     * @param $query
+     *
+     * @return $this
+     */
     public function search($query)
     {
         $this->parameters['freeTextSearch'] = $query;

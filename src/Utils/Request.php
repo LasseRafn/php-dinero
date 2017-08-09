@@ -31,11 +31,11 @@ class Request
         ]);
     }
 
-	/**
-	 * Return a string with the oAuth url.
-	 *
-	 * @return string
-	 */
+    /**
+     * Return a string with the oAuth url.
+     *
+     * @return string
+     */
     public function getAuthUrl()
     {
         return $this->authUri;

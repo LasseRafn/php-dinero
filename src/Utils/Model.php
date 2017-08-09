@@ -30,15 +30,15 @@ class Model
         return json_encode($this->toArray());
     }
 
-	/**
-	 * Returns an array of the models public attributes.
-	 *
-	 * @return array
-	 */
+    /**
+     * Returns an array of the models public attributes.
+     *
+     * @return array
+     */
     public function toArray()
     {
         $data = [];
-        $class =  new \ReflectionObject($this);
+        $class = new \ReflectionObject($this);
         $properties = $class->getProperties(\ReflectionProperty::IS_PUBLIC);
 
         /** @var \ReflectionProperty $property */
@@ -49,34 +49,34 @@ class Model
         return $data;
     }
 
-	/**
-	 * Set attribute of model.
-	 *
-	 * @param $attribute
-	 * @param $value
-	 */
+    /**
+     * Set attribute of model.
+     *
+     * @param $attribute
+     * @param $value
+     */
     protected function setAttribute($attribute, $value)
     {
         $this->{$attribute} = $value;
     }
 
-	/**
-	 * Send a request to the API to delete the model.
-	 *
-	 * @return \Psr\Http\Message\ResponseInterface
-	 */
+    /**
+     * Send a request to the API to delete the model.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function delete()
     {
         return $this->request->curl->delete("/{$this->entity}/{$this->{$this->primaryKey}}");
     }
 
-	/**
-	 * Send a request to the API to update the model.
-	 *
-	 * @param array $data
-	 *
-	 * @return mixed
-	 */
+    /**
+     * Send a request to the API to update the model.
+     *
+     * @param array $data
+     *
+     * @return mixed
+     */
     public function update($data = [])
     {
         $response = $this->request->curl->put("/{$this->entity}/{$this->{$this->primaryKey}}", [
@@ -88,18 +88,18 @@ class Model
         return new $this->modelClass($this->request, $responseData);
     }
 
-	/**
-	 * Convert a string to camelCase
-	 *
-	 * @param $string
-	 *
-	 * @return mixed
-	 */
-    private function camelCase($string) {
+    /**
+     * Convert a string to camelCase.
+     *
+     * @param $string
+     *
+     * @return mixed
+     */
+    private function camelCase($string)
+    {
+        $value = ucwords(str_replace(['-', '_'], ' ', $string));
+        $value = str_replace(' ', '', $value);
 
-	    $value = ucwords(str_replace(['-', '_'], ' ', $string));
-	    $value = str_replace(' ', '', $value);
-
-	    return lcfirst($value);
+        return lcfirst($value);
     }
 }

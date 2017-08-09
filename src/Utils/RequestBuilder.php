@@ -60,7 +60,7 @@ class RequestBuilder
 
     /**
      * Used for pagination, to set pagesize.
-     * Default: 100, max: 1000
+     * Default: 100, max: 1000.
      *
      * @param $pageSize
      *
@@ -68,9 +68,9 @@ class RequestBuilder
      */
     public function perPage($pageSize)
     {
-    	if($pageSize > 1000) {
-    		$pageSize = 1000;
-	    }
+        if ($pageSize > 1000) {
+            $pageSize = 1000;
+        }
 
         $this->parameters['pageSize'] = $pageSize;
 
@@ -116,7 +116,7 @@ class RequestBuilder
     }
 
     /**
-     * Build URL parameters
+     * Build URL parameters.
      *
      * @return array
      */
@@ -188,48 +188,53 @@ class RequestBuilder
         return $this->builder->find($guid);
     }
 
-	/**
-	 * Returns the set page
-	 *
-	 * @return integer
-	 */
-    public function getPage() {
-    	return $this->parameters['page'];
+    /**
+     * Returns the set page.
+     *
+     * @return int
+     */
+    public function getPage()
+    {
+        return $this->parameters['page'];
     }
 
-	/**
-	 * Returns the perPage
-	 *
-	 * @return integer
-	 */
-    public function getPerPage() {
-    	return $this->parameters['pageSize'];
+    /**
+     * Returns the perPage.
+     *
+     * @return int
+     */
+    public function getPerPage()
+    {
+        return $this->parameters['pageSize'];
     }
 
-	/**
-	 * Returns the fields
-	 *
-	 * @return array|null
-	 */
-    public function getSelectedFields() {
-    	return $this->parameters['fields'] ?? null;
+    /**
+     * Returns the fields.
+     *
+     * @return array|null
+     */
+    public function getSelectedFields()
+    {
+        return $this->parameters['fields'] ?? null;
     }
 
-	/**
-	 * Returns deletedOnly state
-	 *
-	 * @return string
-	 */
-    public function getDeletedOnlyState() {
-    	return $this->parameters['deletedOnly'] ?? 'false';
+    /**
+     * Returns deletedOnly state.
+     *
+     * @return string
+     */
+    public function getDeletedOnlyState()
+    {
+        return $this->parameters['deletedOnly'] ?? 'false';
     }
 
-	/**
-	 * Returns changes since
-	 *
-	 * @return string|null
-	 */
-    public function getChangesSince() {
-    	return $this->parameters['changesSince'] ?? null;
+    /**
+     * Returns changes since.
+     *
+     * @return string|null
+     */
+    public function getChangesSince()
+    {
+        return $this->parameters['changesSince'] ?? null;
     }
 }
