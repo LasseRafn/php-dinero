@@ -21,10 +21,10 @@ class Model
         $data = (array) $data;
 
         foreach ($data as $attribute => $value) {
-            if (!method_exists($this, 'set'.ucfirst(camel_case($attribute)).'Attribute')) {
+            if (!method_exists($this, 'set'.ucfirst($this->camelCase($attribute)).'Attribute')) {
                 $this->setAttribute($attribute, $value);
             } else {
-                $this->setAttribute($attribute, $this->{'set'.ucfirst(camel_case($attribute)).'Attribute'}($value));
+                $this->setAttribute($attribute, $this->{'set'.ucfirst($this->camelCase($attribute)).'Attribute'}($value));
             }
         }
     }
@@ -42,11 +42,12 @@ class Model
     public function toArray()
     {
         $data = [];
-        $properties = ( new \ReflectionObject($this) )->getProperties(\ReflectionProperty::IS_PUBLIC);
+        $class =  new \ReflectionObject($this);
+        $properties = $class->getProperties(\ReflectionProperty::IS_PUBLIC);
 
         /** @var \ReflectionProperty $property */
         foreach ($properties as $property) {
-            $data[$property->getName()] = $property->getValue($property); // todo test this
+            $data[$property->getName()] = $this->{$property->getName()};
         }
 
         return $data;
@@ -89,5 +90,20 @@ class Model
         $responseData = json_decode($response->getBody()->getContents());
 
         return new $this->modelClass($this->request, $responseData);
+    }
+
+	/**
+	 * Convert a string to camelCase
+	 *
+	 * @param $string
+	 *
+	 * @return mixed
+	 */
+    private function camelCase($string) {
+
+	    $value = ucwords(str_replace(['-', '_'], ' ', $string));
+	    $value = str_replace(' ', '', $value);
+
+	    return lcfirst($value);
     }
 }
