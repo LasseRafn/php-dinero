@@ -1,9 +1,11 @@
-<?php namespace LasseRafn\Dinero\Builders;
+<?php
+
+namespace LasseRafn\Dinero\Builders;
 
 use LasseRafn\Dinero\Models\Product;
 
 class ProductBuilder extends Builder
 {
-	protected $entity = 'products';
-	protected $model = Product::class;
+    protected $entity = 'products';
+    protected $model = Product::class;
 }

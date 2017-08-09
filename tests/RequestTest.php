@@ -1,8 +1,7 @@
-<?php namespace LasseRafn\Dinero\Tests;
+<?php
 
-use LasseRafn\Dinero\Utils\Request;
+namespace LasseRafn\Dinero\Tests;
 
 class RequestTest extends \PHPUnit_Framework_TestCase
 {
-
 }
