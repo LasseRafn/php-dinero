@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="Package Test Suite" tests="3" assertions="0" failures="0" errors="0" time="0.010855">
-    <testsuite name="LasseRafn\Dinero\Tests\DineroTest" file="/Users/lasserafn/dev-projects/packages/php-dinero/tests/DineroTest.php" tests="1" assertions="0" failures="0" errors="0" time="0.010501">
-      <testcase name="Warning" assertions="0" time="0.010501"/>
+  <testsuite name="Package Test Suite" tests="5" assertions="0" failures="0" errors="0" time="0.003484">
+    <testsuite name="LasseRafn\Dinero\Tests\DineroTest" file="/Users/lasserafn/dev-projects/packages/php-dinero/tests/DineroTest.php" tests="1" assertions="0" failures="0" errors="0" time="0.002881">
+      <testcase name="Warning" assertions="0" time="0.002881"/>
     </testsuite>
-    <testsuite name="LasseRafn\Dinero\Tests\RequestBuilderTest" file="/Users/lasserafn/dev-projects/packages/php-dinero/tests/RequestBuilderTest.php" tests="1" assertions="0" failures="0" errors="0" time="0.000190">
-      <testcase name="Warning" assertions="0" time="0.000190"/>
+    <testsuite name="LasseRafn\Dinero\Tests\ModelTest" file="/Users/lasserafn/dev-projects/packages/php-dinero/tests/ModelTest.php" tests="1" assertions="0" failures="0" errors="0" time="0.000147">
+      <testcase name="Warning" assertions="0" time="0.000147"/>
     </testsuite>
-    <testsuite name="LasseRafn\Dinero\Tests\RequestTest" file="/Users/lasserafn/dev-projects/packages/php-dinero/tests/RequestTest.php" tests="1" assertions="0" failures="0" errors="0" time="0.000164">
-      <testcase name="Warning" assertions="0" time="0.000164"/>
+    <testsuite name="LasseRafn\Dinero\Tests\RequestBuilderTest" file="/Users/lasserafn/dev-projects/packages/php-dinero/tests/RequestBuilderTest.php" tests="1" assertions="0" failures="0" errors="0" time="0.000161">
+      <testcase name="Warning" assertions="0" time="0.000161"/>
+    </testsuite>
+    <testsuite name="LasseRafn\Dinero\Tests\RequestTest" file="/Users/lasserafn/dev-projects/packages/php-dinero/tests/RequestTest.php" tests="1" assertions="0" failures="0" errors="0" time="0.000149">
+      <testcase name="Warning" assertions="0" time="0.000149"/>
+    </testsuite>
+    <testsuite name="LasseRafn\Dinero\Tests\TestCase" file="/Users/lasserafn/dev-projects/packages/php-dinero/tests/TestCase.php" tests="1" assertions="0" failures="0" errors="0" time="0.000146">
+      <testcase name="Warning" assertions="0" time="0.000146"/>
     </testsuite>
   </testsuite>
 </testsuites>

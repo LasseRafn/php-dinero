@@ -2,6 +2,6 @@
 
 namespace LasseRafn\Dinero\Tests;
 
-class RequestBuilderTest extends TestCase
+class ModelTest extends TestCase
 {
 }
