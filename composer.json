@@ -1,0 +1,30 @@
+{
+    "name": "lasserafn/php-dinero",
+    "description": "Dinero REST wrapper for PHP",
+    "keywords": ["laravel", "wrapper", "dinero", "api", "integration"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lasse Rafn",
+            "email": "lasserafn@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+		"guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+		"phpunit/phpunit": "^5.7",
+		"satooshi/php-coveralls": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LasseRafn\\Dinero\\": "src"
+        }
+    },
+	"autoload-dev": {
+		"psr-4": {
+			"LasseRafn\\Dinero\\Tests\\": "tests/"
+		}
+	}
+}
