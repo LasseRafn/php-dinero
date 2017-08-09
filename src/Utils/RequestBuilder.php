@@ -238,4 +238,16 @@ class RequestBuilder
     {
         return $this->parameters['changesSince'] ?? null;
     }
+
+	/**
+	 * Creates a model from a data array.
+	 * Sends a API request.
+	 *
+	 * @param array $data
+	 * @param boolean $fakeAttributes
+	 */
+	public function create($data = [], $fakeAttributes = true)
+	{
+		return $this->builder->create($data, $fakeAttributes);
+	}
 }
