@@ -20,6 +20,8 @@ class RequestBuilder
     }
 
     /**
+     * Select only some fields.
+     *
      * @param array|int|string $fields
      *
      * @return $this
@@ -42,6 +44,8 @@ class RequestBuilder
     }
 
     /**
+     * Used for pagination, to set current page.
+     *
      * @param $page
      *
      * @return $this
@@ -54,6 +58,8 @@ class RequestBuilder
     }
 
     /**
+     * Used for pagination, to set pagesize.
+     *
      * @param $pageSize
      *
      * @return $this
@@ -66,6 +72,7 @@ class RequestBuilder
     }
 
     /**
+     * Add a filter to only show models that are deleted.
      * @return $this
      */
     public function deletedOnly()
@@ -76,6 +83,8 @@ class RequestBuilder
     }
 
     /**
+     * Add a filter to only show models changed since %.
+     *
      * @param \DateTime $date
      *
      * @return $this
@@ -88,6 +97,8 @@ class RequestBuilder
     }
 
     /**
+     * Build URL parameters
+     *
      * @return array
      */
     private function buildParameters()
@@ -102,6 +113,8 @@ class RequestBuilder
     }
 
     /**
+     * Send a request to the API to get models.
+     *
      * @return Model[]
      */
     public function get()
@@ -112,6 +125,14 @@ class RequestBuilder
     }
 
     /**
+     * Send a request to the API to get models,
+     * manually paginated to get all objects.
+     *
+     * We specify a minor usleep to prevent some
+     * weird bugs. You can disable this if you
+     * desire, however I ran into trouble with
+     * larger datasets.
+     *
      * @param bool $sleep
      *
      * @return array
@@ -136,6 +157,8 @@ class RequestBuilder
     }
 
     /**
+     * Send a request to the API to get a single model.
+     *
      * @param $guid
      *
      * @return Model|mixed
