@@ -34,6 +34,11 @@ class Model
         return json_encode($this->toArray());
     }
 
+	/**
+	 * Returns an array of the models public attributes.
+	 *
+	 * @return array
+	 */
     public function toArray()
     {
         $data = [];
@@ -47,16 +52,34 @@ class Model
         return $data;
     }
 
+	/**
+	 * Set attribute of model.
+	 *
+	 * @param $attribute
+	 * @param $value
+	 */
     protected function setAttribute($attribute, $value)
     {
         $this->{$attribute} = $value;
     }
 
+	/**
+	 * Send a request to the API to delete the model.
+	 *
+	 * @return \Psr\Http\Message\ResponseInterface
+	 */
     public function delete()
     {
         return $this->request->curl->delete("/{$this->entity}/{$this->{$this->primaryKey}}");
     }
 
+	/**
+	 * Send a request to the API to update the model.
+	 *
+	 * @param array $data
+	 *
+	 * @return mixed
+	 */
     public function update($data = [])
     {
         $response = $this->request->curl->put("/{$this->entity}/{$this->{$this->primaryKey}}", [
