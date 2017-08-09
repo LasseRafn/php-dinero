@@ -46,6 +46,11 @@ class Dinero
         return $this->authToken;
     }
 
+    public function getOrg()
+    {
+        return $this->org;
+    }
+
     public function getAuthUrl()
     {
         return $this->request->getAuthUrl();
