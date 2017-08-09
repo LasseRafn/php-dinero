@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use LasseRafn\Dinero\Exceptions\DineroRequestException;
 use LasseRafn\Dinero\Exceptions\DineroServerException;
+use LasseRafn\Dinero\Responses\PaginatedResponse;
 use LasseRafn\Dinero\Utils\Model;
 use LasseRafn\Dinero\Utils\Request;
 
@@ -44,27 +45,25 @@ class Builder
     /**
      * @param string $parameters
      *
-     * @return Model[]
+     * @return PaginatedResponse
      */
     public function get($parameters = '')
     {
         try {
             $response = $this->request->curl->get("{$this->entity}{$parameters}");
-            $responseData = json_decode($response->getBody()->getContents());
+            $paginatedResponse = new PaginatedResponse($response);
         } catch (ClientException $exception) {
             throw new DineroRequestException($exception);
         } catch (ServerException $exception) {
             throw new DineroServerException($exception);
         }
 
-        /** @var array $fetchedItems */
-        $fetchedItems = $responseData->Collection;
+        $request = $this->request;
 
-        $items = [];
-        foreach ($fetchedItems as $item) {
-            $items[] = new $this->model($this->request, $item);
-        }
+	    $paginatedResponse->setItems(array_map(function($item) use($request) {
+		    return new $this->model($request, $item);
+	    }, $paginatedResponse->items));
 
-        return $items;
+        return $paginatedResponse;
     }
 }

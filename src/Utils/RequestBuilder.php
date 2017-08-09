@@ -3,6 +3,7 @@
 namespace LasseRafn\Dinero\Utils;
 
 use LasseRafn\Dinero\Builders\Builder;
+use LasseRafn\Dinero\Responses\PaginatedResponse;
 
 class RequestBuilder
 {
@@ -134,7 +135,7 @@ class RequestBuilder
     /**
      * Send a request to the API to get models.
      *
-     * @return Model[]
+     * @return PaginatedResponse
      */
     public function get()
     {
@@ -162,7 +163,7 @@ class RequestBuilder
         $this->page(0);
 
         while (count($response = $this->builder->get($this->buildParameters())) > 0) {
-            foreach ($response as $item) {
+            foreach ($response->items as $item) {
                 $items[] = $item;
             }
 
