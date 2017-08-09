@@ -233,7 +233,7 @@ class RequestBuilder
      *
      * @return string|null
      */
-    public function getChangesSince()
+    public function getSince()
     {
         return $this->parameters['changesSince'] ?? null;
     }

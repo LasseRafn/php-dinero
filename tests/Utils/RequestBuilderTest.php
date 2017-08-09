@@ -72,4 +72,14 @@ class RequestBuilderTest extends TestCase
 
         $this->assertEquals('false', $this->builder->getDeletedOnlyState());
     }
+
+    /** @test */
+    public function can_set_changed_since()
+    {
+    	$date = new \DateTime('2017-01-01');
+
+        $this->builder->since($date);
+
+        $this->assertEquals($date->format('Y-m-d'), $this->builder->getSince());
+    }
 }
