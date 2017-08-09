@@ -8,10 +8,6 @@ class Model
     protected $primaryKey;
     protected $modelClass = self::class;
     protected $fillable = [];
-
-    /**
-     * @var Request
-     */
     protected $request;
 
     public function __construct(Request $request, $data = [])
