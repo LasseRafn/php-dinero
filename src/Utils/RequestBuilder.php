@@ -185,4 +185,13 @@ class RequestBuilder
     public function getPerPage() {
     	return $this->parameters['pageSize'];
     }
+
+	/**
+	 * Returns the fields
+	 *
+	 * @return array|null
+	 */
+    public function getSelectedFields() {
+    	return $this->parameters['fields'] ?? null;
+    }
 }

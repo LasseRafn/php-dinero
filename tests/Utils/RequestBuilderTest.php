@@ -36,4 +36,22 @@ class RequestBuilderTest extends TestCase
 
 		$this->assertEquals(50, $this->builder->getPerPage());
 	}
+
+	/** @test */
+	public function can_select_specific_field() {
+		$this->assertEquals(null, $this->builder->getSelectedFields());
+
+		$this->builder->select('id');
+
+		$this->assertEquals(['id'], $this->builder->getSelectedFields());
+	}
+
+	/** @test */
+	public function can_select_many_fields() {
+		$this->assertEquals(null, $this->builder->getSelectedFields());
+
+		$this->builder->select(['id', 'name']);
+
+		$this->assertEquals(['id', 'name'], $this->builder->getSelectedFields());
+	}
 }
