@@ -2,7 +2,7 @@
 
 namespace LasseRafn\Dinero\Responses;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 
 class PaginatedResponse
 {
@@ -18,13 +18,15 @@ class PaginatedResponse
 
 	public function __construct( Response $response )
 	{
-		$this->items = $response->json()->Collection;
+		$jsonResponse = json_decode($response->getBody()->getContents());
 
-		$this->page                = $response->json()->Pagination->Page;
-		$this->pageSize            = $response->json()->Pagination->PageSize;
-		$this->maxPageSizeAllowed  = $response->json()->Pagination->MaxPageSizeAllowed;
-		$this->result              = $response->json()->Pagination->Result;
-		$this->resultWithoutFilter = $response->json()->Pagination->ResultWithoutFilter;
+		$this->items = $jsonResponse->Collection;
+
+		$this->page                = $jsonResponse->Pagination->Page;
+		$this->pageSize            = $jsonResponse->Pagination->PageSize;
+		$this->maxPageSizeAllowed  = $jsonResponse->Pagination->MaxPageSizeAllowed;
+		$this->result              = $jsonResponse->Pagination->Result;
+		$this->resultWithoutFilter = $jsonResponse->Pagination->ResultWithoutFilter;
 	}
 
 	public function setItems(array $items) {

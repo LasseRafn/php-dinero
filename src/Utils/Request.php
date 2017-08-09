@@ -11,7 +11,7 @@ class Request
     protected $baseUri = 'https://api.dinero.dk/v1';
     protected $authUri = 'https://authz.dinero.dk/dineroapi/oauth/token';
 
-    public function __construct($clientId = '', $clientSecret = '', $token = null, $org = null)
+    public function __construct($clientId = '', $clientSecret = '', $token = null, $org = null, $clientConfig = [])
     {
         $encodedClientIdAndSecret = base64_encode("{$clientId}:{$clientSecret}");
 
@@ -25,10 +25,10 @@ class Request
             $headers['Content-Type'] = 'application/x-www-form-urlencoded';
         }
 
-        $this->curl = new Client([
+        $this->curl = new Client(array_merge([
             'base_uri' => $this->baseUri.($org !== null ? "/{$org}/" : ''),
             'headers'  => $headers,
-        ]);
+        ], $clientConfig));
     }
 
     /**

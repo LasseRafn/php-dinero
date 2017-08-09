@@ -245,6 +245,8 @@ class RequestBuilder
 	 *
 	 * @param array $data
 	 * @param boolean $fakeAttributes
+	 *
+	 * @return Model
 	 */
 	public function create($data = [], $fakeAttributes = true)
 	{
