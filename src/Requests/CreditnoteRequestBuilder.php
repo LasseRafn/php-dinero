@@ -1,71 +1,73 @@
-<?php namespace LasseRafn\Dinero\Requests;
+<?php
+
+namespace LasseRafn\Dinero\Requests;
 
 use LasseRafn\Dinero\Builders\Builder;
 use LasseRafn\Dinero\Utils\RequestBuilder;
 
 class CreditnoteRequestBuilder extends RequestBuilder
 {
-	public function __construct( Builder $builder )
-	{
-		$this->parameters['fields'] = 'Number,Guid,ContactName,Date,Description,TotalInclVat,Currency,Status';
+    public function __construct(Builder $builder)
+    {
+        $this->parameters['fields'] = 'Number,Guid,ContactName,Date,Description,TotalInclVat,Currency,Status';
 
-		parent::__construct( $builder );
-	}
+        parent::__construct($builder);
+    }
 
-	public function from(\DateTime $startDate)
-	{
-		$this->parameters['startDate'] = $startDate->format($this->dateFormat);
+    public function from(\DateTime $startDate)
+    {
+        $this->parameters['startDate'] = $startDate->format($this->dateFormat);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function to(\DateTime $endDate)
-	{
-		$this->parameters['endDate'] = $endDate->format($this->dateFormat);
+    public function to(\DateTime $endDate)
+    {
+        $this->parameters['endDate'] = $endDate->format($this->dateFormat);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function search($query)
-	{
-		$this->parameters['freeTextSearch'] = $query;
+    public function search($query)
+    {
+        $this->parameters['freeTextSearch'] = $query;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function sortByVoucherNumber()
-	{
-		return $this->sortBy('VoucherNumber');
-	}
+    public function sortByVoucherNumber()
+    {
+        return $this->sortBy('VoucherNumber');
+    }
 
-	public function sortByVoucherDate()
-	{
-		return $this->sortBy('VoucherDate');
-	}
+    public function sortByVoucherDate()
+    {
+        return $this->sortBy('VoucherDate');
+    }
 
-	public function sortByStatus()
-	{
-		return $this->sortBy('Status');
-	}
+    public function sortByStatus()
+    {
+        return $this->sortBy('Status');
+    }
 
-	public function sortBy($value)
-	{
-		$this->parameters['sort'] = $value;
+    public function sortBy($value)
+    {
+        $this->parameters['sort'] = $value;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function sortDescending()
-	{
-		$this->parameters['sortOrder'] = 'descending';
+    public function sortDescending()
+    {
+        $this->parameters['sortOrder'] = 'descending';
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function sortAscending()
-	{
-		$this->parameters['sortOrder'] = 'ascending';
+    public function sortAscending()
+    {
+        $this->parameters['sortOrder'] = 'ascending';
 
-		return $this;
-	}
+        return $this;
+    }
 }

@@ -1,69 +1,70 @@
-<?php namespace LasseRafn\Dinero\Utils;
+<?php
+
+namespace LasseRafn\Dinero\Utils;
 
 class Model
 {
-	protected $entity;
-	protected $primaryKey;
-	protected $modelClass = self::class;
-	protected $fillable   = [];
+    protected $entity;
+    protected $primaryKey;
+    protected $modelClass = self::class;
+    protected $fillable = [];
 
-	/**
-	 * @var Request
-	 */
-	protected $request;
+    /**
+     * @var Request
+     */
+    protected $request;
 
-	public function __construct( Request $request, $data = [] )
-	{
-		$this->request = $request;
+    public function __construct(Request $request, $data = [])
+    {
+        $this->request = $request;
 
-		$data = (array) $data;
+        $data = (array) $data;
 
-		foreach ( $data as $attribute => $value ) {
-			if ( ! method_exists( $this, 'set' . ucfirst( camel_case( $attribute ) ) . 'Attribute' ) ) {
-				$this->setAttribute( $attribute, $value );
-			}
-			else {
-				$this->setAttribute( $attribute, $this->{'set' . ucfirst( camel_case( $attribute ) ) . 'Attribute'}( $value ) );
-			}
-		}
-	}
+        foreach ($data as $attribute => $value) {
+            if (!method_exists($this, 'set'.ucfirst(camel_case($attribute)).'Attribute')) {
+                $this->setAttribute($attribute, $value);
+            } else {
+                $this->setAttribute($attribute, $this->{'set'.ucfirst(camel_case($attribute)).'Attribute'}($value));
+            }
+        }
+    }
 
-	public function __toString()
-	{
-		return json_encode( $this->toArray() );
-	}
+    public function __toString()
+    {
+        return json_encode($this->toArray());
+    }
 
-	public function toArray()
-	{
-		$data = [];
-		$properties = ( new \ReflectionObject( $this ) )->getProperties( \ReflectionProperty::IS_PUBLIC );
+    public function toArray()
+    {
+        $data = [];
+        $properties = ( new \ReflectionObject($this) )->getProperties(\ReflectionProperty::IS_PUBLIC);
 
-		/** @var \ReflectionProperty $property */
-		foreach($properties as $property) {
-			$data[$property->getName()] = $property->getValue($property); // todo test this
-		}
+        /** @var \ReflectionProperty $property */
+        foreach ($properties as $property) {
+            $data[$property->getName()] = $property->getValue($property); // todo test this
+        }
 
-		return $data;
-	}
+        return $data;
+    }
 
-	protected function setAttribute( $attribute, $value )
-	{
-		$this->{$attribute} = $value;
-	}
+    protected function setAttribute($attribute, $value)
+    {
+        $this->{$attribute} = $value;
+    }
 
-	public function delete()
-	{
-		return $this->request->curl->delete( "/{$this->entity}/{$this->{$this->primaryKey}}" );
-	}
+    public function delete()
+    {
+        return $this->request->curl->delete("/{$this->entity}/{$this->{$this->primaryKey}}");
+    }
 
-	public function update( $data = [] )
-	{
-		$response = $this->request->curl->put( "/{$this->entity}/{$this->{$this->primaryKey}}", [
-			'json' => $data
-		] );
+    public function update($data = [])
+    {
+        $response = $this->request->curl->put("/{$this->entity}/{$this->{$this->primaryKey}}", [
+            'json' => $data,
+        ]);
 
-		$responseData = json_decode( $response->getBody()->getContents() );
+        $responseData = json_decode($response->getBody()->getContents());
 
-		return new $this->modelClass( $this->request, $responseData );
-	}
+        return new $this->modelClass($this->request, $responseData);
+    }
 }
