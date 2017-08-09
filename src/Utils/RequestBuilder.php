@@ -167,4 +167,22 @@ class RequestBuilder
     {
         return $this->builder->find($guid);
     }
+
+	/**
+	 * Returns the set page
+	 *
+	 * @return integer
+	 */
+    public function getPage() {
+    	return $this->parameters['page'];
+    }
+
+	/**
+	 * Returns the perPage
+	 *
+	 * @return integer
+	 */
+    public function getPerPage() {
+    	return $this->parameters['pageSize'];
+    }
 }
