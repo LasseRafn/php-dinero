@@ -3,10 +3,13 @@
 namespace LasseRafn\Dinero;
 
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use LasseRafn\Dinero\Builders\ContactBuilder;
 use LasseRafn\Dinero\Builders\CreditnoteBuilder;
 use LasseRafn\Dinero\Builders\InvoiceBuilder;
 use LasseRafn\Dinero\Builders\ProductBuilder;
+use LasseRafn\Dinero\Exceptions\DineroRequestException;
+use LasseRafn\Dinero\Exceptions\DineroServerException;
 use LasseRafn\Dinero\Requests\ContactRequestBuilder;
 use LasseRafn\Dinero\Requests\CreditnoteRequestBuilder;
 use LasseRafn\Dinero\Requests\InvoiceRequestBuilder;
@@ -71,12 +74,10 @@ class Dinero
             $this->setAuth($response->access_token, $orgId);
 
             return $response;
-        } catch (ClientException $exception) {
-            if ($exception->hasResponse()) {
-                $error = json_decode(json_decode($exception->getResponse()->getBody()->getContents())->message)->error;
-
-                throw new ClientException("{$exception->getRequest()->getUri()}: $error", $exception->getRequest(), $exception->getResponse(), $exception->getPrevious(), $exception->getHandlerContext());
-            }
+        } catch ( ClientException $exception ) {
+	        throw new DineroRequestException( $exception );
+        } catch ( ServerException $exception ) {
+	        throw new DineroServerException( $exception );
         }
     }
 
