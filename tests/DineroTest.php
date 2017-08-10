@@ -69,4 +69,12 @@ class DineroTest extends TestCase
 		$this->assertSame( CreditnoteRequestBuilder::class, get_class( $dinero->creditnotes() ) );
 		$this->assertSame( ProductRequestBuilder::class, get_class( $dinero->products() ) );
 	}
+
+	/** @test */
+	public function can_get_auth_url()
+	{
+		$dinero = new Dinero( 'clientId', 'clientSecret' );
+
+		$this->assertSame('https://authz.dinero.dk/dineroapi/oauth/token', $dinero->getAuthUrl());
+	}
 }
