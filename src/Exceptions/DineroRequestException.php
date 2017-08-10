@@ -15,7 +15,7 @@ class DineroRequestException extends ClientException
                                                             ->getBody()
                                                             ->getContents());
 
-            $message = "$messageResponse->message:";
+            $message = "{$messageResponse->message}:";
 
             if (isset($messageResponse->validationErrors)) {
                 foreach ($messageResponse->validationErrors as $key => $validationError) {
