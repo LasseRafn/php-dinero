@@ -6,6 +6,8 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use LasseRafn\Dinero\Dinero;
+use LasseRafn\Dinero\Exceptions\DineroRequestException;
+use LasseRafn\Dinero\Exceptions\DineroServerException;
 use LasseRafn\Dinero\Requests\ContactRequestBuilder;
 use LasseRafn\Dinero\Requests\CreditnoteRequestBuilder;
 use LasseRafn\Dinero\Requests\InvoiceRequestBuilder;
@@ -76,5 +78,45 @@ class DineroTest extends TestCase
 		$dinero = new Dinero( 'clientId', 'clientSecret' );
 
 		$this->assertSame('https://authz.dinero.dk/dineroapi/oauth/token', $dinero->getAuthUrl());
+	}
+
+	/** @test */
+	public function can_fail_to_auth_with_the_api_because_of_invalid_data()
+	{
+		$this->expectException(DineroRequestException::class);
+
+		$expectedResponse = [
+			'error' => 'invalid_client'
+		];
+
+		$mock = new MockHandler( [
+			new Response( 401, [], json_encode( $expectedResponse ) )
+		] );
+
+		$handler = HandlerStack::create( $mock );
+
+		$dinero = new Dinero( 'clientId', 'clientSecret', null, null, ['handler' => $handler] );
+
+		$dinero->auth('foo', 'bar');
+	}
+
+	/** @test */
+	public function can_fail_to_auth_with_the_api_because_of_server_problems()
+	{
+		$this->expectException(DineroServerException::class);
+
+		$expectedResponse = [
+			'error' => 'A server error occured. No more information about this error could be found.'
+		];
+
+		$mock = new MockHandler( [
+			new Response( 503, [], json_encode( $expectedResponse ) )
+		] );
+
+		$handler = HandlerStack::create( $mock );
+
+		$dinero = new Dinero( 'clientId', 'clientSecret', null, null, ['handler' => $handler] );
+
+		$dinero->auth('foo', 'bar');
 	}
 }
