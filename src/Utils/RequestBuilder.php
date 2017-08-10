@@ -189,6 +189,20 @@ class RequestBuilder
         return $this->builder->find($guid);
     }
 
+	/**
+	 * Creates a model from a data array.
+	 * Sends a API request.
+	 *
+	 * @param array $data
+	 * @param boolean $fakeAttributes
+	 *
+	 * @return Model
+	 */
+	public function create($data = [], $fakeAttributes = true)
+	{
+		return $this->builder->create($data, $fakeAttributes);
+	}
+
     /**
      * Returns the set page.
      *
@@ -239,17 +253,13 @@ class RequestBuilder
         return $this->parameters['changesSince'] ?? null;
     }
 
-	/**
-	 * Creates a model from a data array.
-	 * Sends a API request.
-	 *
-	 * @param array $data
-	 * @param boolean $fakeAttributes
-	 *
-	 * @return Model
-	 */
-	public function create($data = [], $fakeAttributes = true)
-	{
-		return $this->builder->create($data, $fakeAttributes);
-	}
+    /**
+     * Returns all parameters as an array
+     *
+     * @return array
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
 }
