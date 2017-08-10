@@ -46,6 +46,16 @@ class RequestBuilderTest extends TestCase
 	}
 
 	/** @test */
+	public function will_set_per_page_to_1000_if_set_above_because_of_dinero_limit()
+	{
+		$this->assertEquals( 100, $this->builder->getPerPage() );
+
+		$this->builder->perPage( 5000 );
+
+		$this->assertEquals( 1000, $this->builder->getPerPage() );
+	}
+
+	/** @test */
 	public function can_select_specific_field()
 	{
 		$this->assertEquals( null, $this->builder->getSelectedFields() );
