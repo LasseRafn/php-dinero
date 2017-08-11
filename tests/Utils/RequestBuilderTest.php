@@ -7,6 +7,8 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use LasseRafn\Dinero\Builders\Builder;
 use LasseRafn\Dinero\Builders\ContactBuilder;
+use LasseRafn\Dinero\Exceptions\DineroRequestException;
+use LasseRafn\Dinero\Exceptions\DineroServerException;
 use LasseRafn\Dinero\Models\Contact;
 use LasseRafn\Dinero\Requests\ContactRequestBuilder;
 use LasseRafn\Dinero\Tests\TestCase;
@@ -137,26 +139,58 @@ class RequestBuilderTest extends TestCase
 		/** @var Contact $contact */
 		$contact = $builder->find( 'eff82399-c387-4cba-b2bb-06ad75849f63' );
 
-		$this->assertSame( $expectedResponse['ContactGuid'], $contact->ContactGuid);
-		$this->assertSame( $expectedResponse['CreatedAt'], $contact->CreatedAt);
-		$this->assertSame( $expectedResponse['UpdatedAt'], $contact->UpdatedAt);
-		$this->assertSame( $expectedResponse['DeletedAt'], $contact->DeletedAt);
-		$this->assertSame( $expectedResponse['IsDebitor'], $contact->IsDebitor);
-		$this->assertSame( $expectedResponse['IsCreditor'], $contact->IsCreditor);
-		$this->assertSame( $expectedResponse['ExternalReference'], $contact->ExternalReference);
-		$this->assertSame( $expectedResponse['Name'], $contact->Name);
-		$this->assertSame( $expectedResponse['Street'], $contact->Street);
-		$this->assertSame( $expectedResponse['ZipCode'], $contact->ZipCode);
-		$this->assertSame( $expectedResponse['City'], $contact->City);
-		$this->assertSame( $expectedResponse['CountryKey'], $contact->CountryKey);
-		$this->assertSame( $expectedResponse['Phone'], $contact->Phone);
-		$this->assertSame( $expectedResponse['Email'], $contact->Email);
-		$this->assertSame( $expectedResponse['Webpage'], $contact->Webpage);
-		$this->assertSame( $expectedResponse['AttPerson'], $contact->AttPerson);
-		$this->assertSame( $expectedResponse['VatNumber'], $contact->VatNumber);
-		$this->assertSame( $expectedResponse['EanNumber'], $contact->EanNumber);
-		$this->assertSame( $expectedResponse['PaymentConditionType'], $contact->PaymentConditionType);
-		$this->assertSame( $expectedResponse['PaymentConditionNumberOfDays'], $contact->PaymentConditionNumberOfDays);
-		$this->assertSame( $expectedResponse['IsPerson'], $contact->IsPerson);
+		$this->assertSame( $expectedResponse['ContactGuid'], $contact->ContactGuid );
+		$this->assertSame( $expectedResponse['CreatedAt'], $contact->CreatedAt );
+		$this->assertSame( $expectedResponse['UpdatedAt'], $contact->UpdatedAt );
+		$this->assertSame( $expectedResponse['DeletedAt'], $contact->DeletedAt );
+		$this->assertSame( $expectedResponse['IsDebitor'], $contact->IsDebitor );
+		$this->assertSame( $expectedResponse['IsCreditor'], $contact->IsCreditor );
+		$this->assertSame( $expectedResponse['ExternalReference'], $contact->ExternalReference );
+		$this->assertSame( $expectedResponse['Name'], $contact->Name );
+		$this->assertSame( $expectedResponse['Street'], $contact->Street );
+		$this->assertSame( $expectedResponse['ZipCode'], $contact->ZipCode );
+		$this->assertSame( $expectedResponse['City'], $contact->City );
+		$this->assertSame( $expectedResponse['CountryKey'], $contact->CountryKey );
+		$this->assertSame( $expectedResponse['Phone'], $contact->Phone );
+		$this->assertSame( $expectedResponse['Email'], $contact->Email );
+		$this->assertSame( $expectedResponse['Webpage'], $contact->Webpage );
+		$this->assertSame( $expectedResponse['AttPerson'], $contact->AttPerson );
+		$this->assertSame( $expectedResponse['VatNumber'], $contact->VatNumber );
+		$this->assertSame( $expectedResponse['EanNumber'], $contact->EanNumber );
+		$this->assertSame( $expectedResponse['PaymentConditionType'], $contact->PaymentConditionType );
+		$this->assertSame( $expectedResponse['PaymentConditionNumberOfDays'], $contact->PaymentConditionNumberOfDays );
+		$this->assertSame( $expectedResponse['IsPerson'], $contact->IsPerson );
+	}
+
+	/** @test */
+	public function can_fail_to_find_model_because_not_found()
+	{
+		$this->expectException( DineroRequestException::class );
+
+		$mock = new MockHandler( [
+			new Response( 404, [], json_encode( [ 'error' => 'Not found.' ] ) )
+		] );
+
+		$handler = HandlerStack::create( $mock );
+
+		$builder = new ContactRequestBuilder( new ContactBuilder( new Request( '', '', null, null, [ 'handler' => $handler ] ) ) );
+
+		$builder->find( '123' );
+	}
+
+	/** @test */
+	public function can_fail_to_find_model_because_of_server_error()
+	{
+		$this->expectException( DineroServerException::class );
+
+		$mock = new MockHandler( [
+			new Response( 503, [], json_encode( [ 'error' => 'Server has drowned..' ] ) )
+		] );
+
+		$handler = HandlerStack::create( $mock );
+
+		$builder = new ContactRequestBuilder( new ContactBuilder( new Request( '', '', null, null, [ 'handler' => $handler ] ) ) );
+
+		$builder->find( '123' );
 	}
 }
