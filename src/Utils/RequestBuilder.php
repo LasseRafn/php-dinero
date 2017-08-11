@@ -162,7 +162,9 @@ class RequestBuilder
         $items = [];
         $this->page(0);
 
-        while (count($response = $this->builder->get($this->buildParameters())) > 0) {
+	    $response = $this->builder->get($this->buildParameters());
+
+        while (count($response->items) > 0) {
             foreach ($response->items as $item) {
                 $items[] = $item;
             }
@@ -172,6 +174,8 @@ class RequestBuilder
             if ($sleep) {
                 usleep(200);
             }
+
+	        $response = $this->builder->get($this->buildParameters());
         }
 
         return $items;
