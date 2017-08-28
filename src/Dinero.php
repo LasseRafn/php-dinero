@@ -74,10 +74,10 @@ class Dinero
             $this->setAuth($response->access_token, $orgId);
 
             return $response;
-        } catch ( ClientException $exception ) {
-	        throw new DineroRequestException( $exception );
-        } catch ( ServerException $exception ) {
-	        throw new DineroServerException( $exception );
+        } catch (ClientException $exception) {
+            throw new DineroRequestException($exception);
+        } catch (ServerException $exception) {
+            throw new DineroServerException($exception);
         }
     }
 
