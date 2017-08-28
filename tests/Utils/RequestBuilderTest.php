@@ -7,7 +7,6 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use LasseRafn\Dinero\Builders\Builder;
 use LasseRafn\Dinero\Builders\ContactBuilder;
-use LasseRafn\Dinero\Dinero;
 use LasseRafn\Dinero\Exceptions\DineroRequestException;
 use LasseRafn\Dinero\Exceptions\DineroServerException;
 use LasseRafn\Dinero\Models\Contact;
@@ -194,6 +193,8 @@ class RequestBuilderTest extends TestCase
 
 		$builder->find( '123' );
 	}
+
+
 
 	/** @test */
 	public function can_create_model()
