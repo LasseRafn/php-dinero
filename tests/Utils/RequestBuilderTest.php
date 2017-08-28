@@ -7,6 +7,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use LasseRafn\Dinero\Builders\Builder;
 use LasseRafn\Dinero\Builders\ContactBuilder;
+use LasseRafn\Dinero\Dinero;
 use LasseRafn\Dinero\Exceptions\DineroRequestException;
 use LasseRafn\Dinero\Exceptions\DineroServerException;
 use LasseRafn\Dinero\Models\Contact;
@@ -192,5 +193,23 @@ class RequestBuilderTest extends TestCase
 		$builder = new ContactRequestBuilder( new ContactBuilder( new Request( '', '', null, null, [ 'handler' => $handler ] ) ) );
 
 		$builder->find( '123' );
+	}
+
+	/** @test */
+	public function can_create_model()
+	{
+		$mock = new MockHandler( [
+			new Response( 200, [], json_encode( [ 'contact' => [ 'IsPerson' => true, 'Name' => 'Test', 'CountryKey' => 'DK' ] ] ) )
+		] );
+
+		$handler = HandlerStack::create( $mock );
+
+		$builder = new ContactRequestBuilder( new ContactBuilder( new Request( '', '', null, null, [ 'handler' => $handler ] ) ) );
+
+		/** @var Contact $contact */
+		$contact = $builder->create( [ 'IsPerson' => true, 'Name' => 'Test', 'CountryKey' => 'DK' ] );
+
+		$this->assertSame( 'Test', $contact->Name );
+		$this->assertTrue( $contact->IsPerson );
 	}
 }

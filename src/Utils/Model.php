@@ -4,102 +4,117 @@ namespace LasseRafn\Dinero\Utils;
 
 class Model
 {
-    protected $entity;
-    protected $primaryKey;
-    protected $modelClass = self::class;
-    protected $fillable = [];
-    protected $request;
+	protected $entity;
+	protected $primaryKey;
+	protected $modelClass = self::class;
+	protected $fillable   = [];
+	protected $request;
 
-    public function __construct(Request $request, $data = [])
-    {
-        $this->request = $request;
+	public function __construct( Request $request, $data = [] )
+	{
+		$this->request = $request;
 
-        $data = (array) $data;
+		$data = (array) $data;
 
-        foreach ($data as $attribute => $value) {
-            if (!method_exists($this, 'set'.ucfirst($this->camelCase($attribute)).'Attribute')) {
-                $this->setAttribute($attribute, $value);
-            } else {
-                $this->setAttribute($attribute, $this->{'set'.ucfirst($this->camelCase($attribute)).'Attribute'}($value));
-            }
-        }
-    }
+		foreach ( $data as $attribute => $value ) {
+			$attribute = is_string( $attribute ) ? trim( $attribute ) : $attribute;
 
-    public function __toString()
-    {
-        return json_encode($this->toArray());
-    }
+			if ( ! method_exists( $this, 'set' . ucfirst( $this->camelCase( $attribute ) ) . 'Attribute' ) ) {
+				$this->setAttribute( $attribute, $value );
+			}
+			else {
+				$this->setAttribute( $attribute, $this->{'set' . ucfirst( $this->camelCase( $attribute ) ) . 'Attribute'}( $value ) );
+			}
+		}
+	}
 
-    /**
-     * Returns an array of the models public attributes.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        $data = [];
-        $class = new \ReflectionObject($this);
-        $properties = $class->getProperties(\ReflectionProperty::IS_PUBLIC);
+	public function __toString()
+	{
+		return json_encode( $this->toArray() );
+	}
 
-        /** @var \ReflectionProperty $property */
-        foreach ($properties as $property) {
-            $data[$property->getName()] = $this->{$property->getName()};
-        }
+	/**
+	 * Returns an array of the models public attributes.
+	 *
+	 * @return array
+	 */
+	public function toArray()
+	{
+		$data       = [];
+		$class      = new \ReflectionObject( $this );
+		$properties = $class->getProperties( \ReflectionProperty::IS_PUBLIC );
 
-        return $data;
-    }
+		/** @var \ReflectionProperty $property */
+		foreach ( $properties as $property ) {
+			$data[ $property->getName() ] = $this->{$property->getName()};
+		}
 
-    /**
-     * Set attribute of model.
-     *
-     * @param $attribute
-     * @param $value
-     */
-    protected function setAttribute($attribute, $value)
-    {
-        $this->{$attribute} = $value;
-    }
+		return $data;
+	}
 
-    /**
-     * Send a request to the API to delete the model.
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function delete()
-    {
-        return $this->request->curl->delete("/{$this->entity}/{$this->{$this->primaryKey}}");
-    }
+	/**
+	 * Set attribute of model.
+	 *
+	 * @param $attribute
+	 * @param $value
+	 */
+	protected function setAttribute( $attribute, $value )
+	{
+		$this->{$attribute} = $value;
+	}
 
-    /**
-     * Send a request to the API to update the model.
-     *
-     * @param array $data
-     *
-     * @return mixed
-     */
-    public function update($data = [])
-    {
-        $response = $this->request->curl->put("/{$this->entity}/{$this->{$this->primaryKey}}", [
-            'json' => $data,
-        ]);
+	/**
+	 * Send a request to the API to delete the model.
+	 *
+	 * @return \Psr\Http\Message\ResponseInterface
+	 */
+	public function delete()
+	{
+		// todo test
+		return $this->request->curl->delete( "/{$this->entity}/{$this->{$this->primaryKey}}" );
+	}
 
-        $responseData = json_decode($response->getBody()->getContents());
+	/**
+	 * Send a request to the API to update the model.
+	 *
+	 * @param array $data
+	 *
+	 * @return mixed
+	 */
+	public function update( $data = [] )
+	{
+		// todo test
+		$response = $this->request->curl->put( "/{$this->entity}/{$this->{$this->primaryKey}}", [
+			'json' => $data,
+		] );
 
-        return new $this->modelClass($this->request, $responseData);
-    }
+		$responseData = json_decode( $response->getBody()->getContents() );
 
-    /**
-     * Convert a string to camelCase.
-     *
-     * @param $string
-     *
-     * @return mixed
-     */
-    private function camelCase($string)
-    {
-        $value = ucwords(str_replace(['-', '_'], ' ', $string));
-        $value = str_replace(' ', '', $value);
+		return new $this->modelClass( $this->request, $responseData );
+	}
 
-        return lcfirst($value);
-    }
+	/**
+	 * Convert a string to camelCase.
+	 *
+	 * @param $string
+	 *
+	 * @return mixed
+	 */
+	private function camelCase( $string )
+	{
+		$value = ucwords( str_replace( [ '-', '_' ], ' ', $string ) );
+		$value = str_replace( ' ', '', $value );
+
+		return lcfirst( $value );
+	}
+
+	/**
+	 * Get PrimaryKey attribute
+	 *
+	 * @return string
+	 */
+	public function getPrimaryKey()
+	{
+		return $this->primaryKey;
+	}
 }

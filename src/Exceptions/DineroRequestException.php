@@ -6,6 +6,8 @@ use GuzzleHttp\Exception\ClientException;
 
 class DineroRequestException extends ClientException
 {
+	public $validationErrors = [];
+
 	public function __construct( ClientException $clientException )
 	{
 		$message = $clientException->getMessage();
@@ -28,6 +30,7 @@ class DineroRequestException extends ClientException
 
 			if ( isset( $messageResponse->validationErrors ) ) {
 				foreach ( $messageResponse->validationErrors as $key => $validationError ) {
+					$this->validationErrors[$key][] = $validationError;
 					$message .= "{$key}: {$validationError}\n";
 				}
 			}

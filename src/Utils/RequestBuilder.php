@@ -197,6 +197,17 @@ class RequestBuilder
 	 * Creates a model from a data array.
 	 * Sends a API request.
 	 *
+	 * $fakeAttributes decides if we should create the model,
+	 * from the data sent, or if we should refetch after creation.
+	 * Because the Dinero API does not return the model after creation,
+	 * so we can either send a GET request, or fake the data.
+	 * Obviously we wont return a faked model if we get an error, so
+	 * faking should be more than enough for most cases; unique IDs are
+	 * returned from the creation response.
+	 *
+	 * When fakeAttribute is false, we send a GET request to the API,
+	 * to get the model.
+	 *
 	 * @param array $data
 	 * @param boolean $fakeAttributes
 	 *

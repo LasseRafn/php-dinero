@@ -72,14 +72,6 @@ class Builder
 	 * Creates a model from a data array.
 	 * Sends a API request.
 	 *
-	 * $fakeAttributes decides if we should create the model,
-	 * from the data sent, or if we should refetch after creation.
-	 * Because the Dinero API does not return the model after creation,
-	 * so we can either send a GET request, or fake the data.
-	 * Obviously we wont return a faked model if we get an error, so
-	 * faking should be more than enough for most cases; unique IDs are
-	 * returned from the creation response.
-	 *
 	 * @param array   $data
 	 * @param boolean $fakeAttributes
 	 *
@@ -91,15 +83,19 @@ class Builder
 	public function create( $data = [], $fakeAttributes = true )
 	{
 		try {
-			$response = $this->request->curl->post( "/{$this->getEntity()}", [
+			$response = $this->request->curl->post( "{$this->getEntity()}", [
 				'json' => $data
 			] );
 
-			$responseData = json_decode( $response->getBody()->getContents() );
+			$responseData = (array) json_decode( $response->getBody()->getContents() );
 
-			$mergedData = array_merge($responseData, $fakeAttributes ? $data : []);
+			if ( ! $fakeAttributes ) {
+				$freshData = (array) $this->find( $responseData[ ( new $this->model( $this->request ) )->getPrimaryKey() ] );
+			}
 
-			return new $this->model( $this->request, $mergedData);
+			$mergedData = array_merge( $responseData, $fakeAttributes ? $data : $freshData );
+
+			return new $this->model( $this->request, $mergedData );
 		} catch ( ClientException $exception ) {
 			throw new DineroRequestException( $exception );
 		} catch ( ServerException $exception ) {
