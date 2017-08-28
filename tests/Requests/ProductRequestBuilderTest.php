@@ -9,23 +9,23 @@ use LasseRafn\Dinero\Utils\Request;
 
 class ProductRequestBuilderTest extends TestCase
 {
-	/** @var ProductRequestBuilder() */
-	private $requestBuilder;
+    /** @var ProductRequestBuilder() */
+    private $requestBuilder;
 
-	public function setUp()
-	{
-		$this->requestBuilder = new ProductRequestBuilder(new ProductBuilder(new Request()));
+    public function setUp()
+    {
+        $this->requestBuilder = new ProductRequestBuilder(new ProductBuilder(new Request()));
 
-		parent::setUp();
-	}
+        parent::setUp();
+    }
 
-	/** @test */
-	public function can_filter_free_text_search()
-	{
-		$this->assertArrayNotHasKey( 'freeTextSearch', $this->requestBuilder->getParameters() );
+    /** @test */
+    public function can_filter_free_text_search()
+    {
+        $this->assertArrayNotHasKey('freeTextSearch', $this->requestBuilder->getParameters());
 
-		$this->requestBuilder->search( 'hello-foo-bar' );
+        $this->requestBuilder->search('hello-foo-bar');
 
-		$this->assertArrayHasKey( 'freeTextSearch', $this->requestBuilder->getParameters() );
-	}
+        $this->assertArrayHasKey('freeTextSearch', $this->requestBuilder->getParameters());
+    }
 }

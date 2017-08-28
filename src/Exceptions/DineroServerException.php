@@ -15,15 +15,13 @@ class DineroServerException extends ServerException
                                                             ->getBody()
                                                             ->getContents());
 
-	        $message = '';
+            $message = '';
 
-	        if ( isset( $messageResponse->message ) ) {
-		        $message = "{$messageResponse->message}:";
-
-	        }
-	        elseif ( isset( $messageResponse->error ) ) {
-		        $message = "{$messageResponse->error}:";
-	        }
+            if (isset($messageResponse->message)) {
+                $message = "{$messageResponse->message}:";
+            } elseif (isset($messageResponse->error)) {
+                $message = "{$messageResponse->error}:";
+            }
 
             if (isset($messageResponse->validationErrors)) {
                 foreach ($messageResponse->validationErrors as $key => $validationError) {
