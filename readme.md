@@ -75,5 +75,7 @@ $dinero = new \LasseRafn\Dinero\Dinero( $clientId, $clientSecret );
 $dinero->auth( $apiKey, $orgId );
  
 // Create the contact
-$dinero->contacts()->create([ 'IsPerson' => true, 'Name' => 'Test', 'CountryKey' => 'DK' ]);
+$contact = $dinero->contacts()->create([ 'IsPerson' => true, 'Name' => 'Test', 'CountryKey' => 'DK' ]);
+
+// if the request succeeded, $contact will be a \LasseRafn\Dinero\Models\Contact object.
 ```
