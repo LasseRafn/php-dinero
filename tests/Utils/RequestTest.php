@@ -20,7 +20,7 @@ class RequestTest extends TestCase
     {
         $request = new Request();
 
-        $this->assertSame('Basic ' . base64_encode(':'), $request->curl->getConfig('headers')['Authorization']);
+        $this->assertSame('Basic '.base64_encode(':'), $request->curl->getConfig('headers')['Authorization']);
         $this->assertSame('application/x-www-form-urlencoded', $request->curl->getConfig('headers')['Content-Type']);
 
         $request = new Request('', '', '123', 123);

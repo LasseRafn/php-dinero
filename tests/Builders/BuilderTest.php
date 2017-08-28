@@ -8,11 +8,11 @@ use LasseRafn\Dinero\Utils\Request;
 
 class BuilderTest extends TestCase
 {
-	/** @test */
-	public function can_get_entity()
-	{
-		$builder = new ContactBuilder( new Request() );
+    /** @test */
+    public function can_get_entity()
+    {
+        $builder = new ContactBuilder(new Request());
 
-		$this->assertSame( 'contacts', $builder->getEntity() );
-	}
+        $this->assertSame('contacts', $builder->getEntity());
+    }
 }
