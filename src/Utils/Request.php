@@ -25,7 +25,7 @@ class Request
             $headers['Content-Type'] = 'application/x-www-form-urlencoded';
         }
 
-        $this->curl = new Client(array_merge([
+        $this->curl = new Client(array_merge_recursive([
             'base_uri' => $this->baseUri.($org !== null ? "/{$org}/" : ''),
             'headers'  => $headers,
         ], $clientConfig));
