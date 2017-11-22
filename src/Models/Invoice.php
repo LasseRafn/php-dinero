@@ -2,6 +2,8 @@
 
 namespace LasseRafn\Dinero\Models;
 
+use LasseRafn\Dinero\Builders\PaymentBuilder;
+use LasseRafn\Dinero\Requests\PaymentRequestBuilder;
 use LasseRafn\Dinero\Utils\Model;
 
 class Invoice extends Model
@@ -42,4 +44,9 @@ class Invoice extends Model
     public $ProductLines;
 
     public $Address;
+
+	public function payments()
+	{
+		return new PaymentRequestBuilder(new PaymentBuilder($this->request, "invoices/{$this->Guid}/payments"));
+	}
 }

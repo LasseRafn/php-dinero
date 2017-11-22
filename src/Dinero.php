@@ -7,12 +7,14 @@ use GuzzleHttp\Exception\ServerException;
 use LasseRafn\Dinero\Builders\ContactBuilder;
 use LasseRafn\Dinero\Builders\CreditnoteBuilder;
 use LasseRafn\Dinero\Builders\InvoiceBuilder;
+use LasseRafn\Dinero\Builders\PaymentBuilder;
 use LasseRafn\Dinero\Builders\ProductBuilder;
 use LasseRafn\Dinero\Exceptions\DineroRequestException;
 use LasseRafn\Dinero\Exceptions\DineroServerException;
 use LasseRafn\Dinero\Requests\ContactRequestBuilder;
 use LasseRafn\Dinero\Requests\CreditnoteRequestBuilder;
 use LasseRafn\Dinero\Requests\InvoiceRequestBuilder;
+use LasseRafn\Dinero\Requests\PaymentRequestBuilder;
 use LasseRafn\Dinero\Requests\ProductRequestBuilder;
 use LasseRafn\Dinero\Utils\Request;
 
@@ -90,6 +92,11 @@ class Dinero
     {
         return new InvoiceRequestBuilder(new InvoiceBuilder($this->request));
     }
+
+	public function paymentsForInvoice($invoiceId)
+	{
+		return new PaymentRequestBuilder(new PaymentBuilder($this->request, "invoices/{$invoiceId}/payments"));
+	}
 
     public function products()
     {
