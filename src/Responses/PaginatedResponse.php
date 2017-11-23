@@ -16,11 +16,11 @@ class PaginatedResponse
     public $result;
     public $resultWithoutFilter;
 
-    public function __construct(Response $response)
+    public function __construct(Response $response, $collectionKey = 'Collection')
     {
         $jsonResponse = json_decode($response->getBody()->getContents());
 
-        $this->items = $jsonResponse->Collection;
+        $this->items = $jsonResponse->{$collectionKey};
 
         $this->page = $jsonResponse->Pagination->Page;
         $this->pageSize = $jsonResponse->Pagination->PageSize;
