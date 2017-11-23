@@ -4,7 +4,7 @@ namespace LasseRafn\Dinero\Responses;
 
 use GuzzleHttp\Psr7\Response;
 
-class PaginatedResponse
+class PaginatedResponse implements ResponseInterface
 {
     /** @var array */
     public $items;
