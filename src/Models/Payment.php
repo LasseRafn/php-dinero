@@ -6,15 +6,6 @@ class Payment extends Model
 {
     protected $entity     = 'payments';
     protected $primaryKey = 'Guid';
-    protected $fillable   = [
-        'Guid',
-        'DepositAccountNumber',
-        'ExternalReference',
-        'PaymentDate',
-        'Description',
-        'Amount',
-        'AmountInForeignCurrency'
-    ];
 
     public $Guid;
     public $DepositAccountNumber;
