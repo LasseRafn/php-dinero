@@ -7,7 +7,6 @@ class Model
     protected $entity;
     protected $primaryKey;
     protected $modelClass = self::class;
-    protected $fillable = [];
     protected $request;
 
     public function __construct(Request $request, $data = [])
