@@ -9,7 +9,7 @@ class CreditnoteRequestBuilder extends RequestBuilder
 {
     public function __construct(Builder $builder)
     {
-        $this->parameters['fields'] = 'TimeStamp,Number,Guid,ContactName,Date,PaymentDate,DeletedAt,UpdatedAt,CreatedAt,Description,TotalInclVatInDkk,TotalInclVat,TotalExclVat,TotalExclVatInDkk,Currency,Status,Type,MailOutStatus';
+        $this->parameters['fields'] = 'Number,Guid,ContactName,Date,PaymentDate,Description,Currency,Status,MailOutStatus,TotalExclVatInDkk,TotalInclVatInDkk,TotalExclVat,TotalInclVat,CreatedAt,UpdatedAt,DeletedAt';
 
         parent::__construct($builder);
     }

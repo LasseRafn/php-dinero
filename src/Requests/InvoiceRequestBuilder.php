@@ -8,7 +8,7 @@ use LasseRafn\Dinero\Utils\RequestBuilder;
 class InvoiceRequestBuilder extends RequestBuilder
 {
 	public function __construct( Builder $builder ) {
-		$this->parameters['fields'] = 'TimeStamp,CreatedAt,UpdatedAt,DeletedAt,Guid,Date,Status,TotalInclVat,Description,ContactName,Number,Currency,PaymentDate,Type,TotalExclVat,TotalInclVatInDkk,TotalExclVatInDkk,MailOutStatus';
+		$this->parameters['fields'] = 'Number,Guid,ContactName,Date,PaymentDate,Description,Currency,Status,MailOutStatus,TotalExclVatInDkk,TotalInclVatInDkk,TotalExclVat,TotalInclVat,CreatedAt,UpdatedAt,DeletedAt';
 
 		parent::__construct( $builder );
 	}
