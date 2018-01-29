@@ -7,7 +7,7 @@ class PaymentRequestBuilder extends RequestBuilder
 {
 	public function __construct( Builder $builder )
 	{
-		$this->parameters['fields'] = '';
+		$this->parameters['fields'] = 'Guid,DepositAccountNumber,ExternalReference,PaymentDate,Description,Amount,AmountInForeignCurrency';
 
 		parent::__construct( $builder );
 	}
