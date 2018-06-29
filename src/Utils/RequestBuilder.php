@@ -26,18 +26,16 @@ class RequestBuilder
 	 *
 	 * @return $this
 	 */
-	public function select( $fields ) {
+	public function select($field) {
 		if ( ! isset( $this->parameters['fields'] ) ) {
-			$this->parameters['fields'] = [];
+		    	$this->parameters['fields'] = [];
 		}
 
-		if ( is_array( $fields ) ) {
-			foreach ( $fields as $field ) {
-				$this->parameters['fields'][] = $field;
-			}
-		} elseif ( is_string( $fields ) || is_int( $fields ) ) {
-			$this->parameters['fields'][] = $fields;
-		}
+		$fields = is_array($fields) ? implode(',', $fields) : $fields;
+
+		$this->parameters['fields'] = is_array($this->parameters['fields']) ? implode($this->parameters['fields']) : $this->parameters['fields'];
+
+		$this->parameters['fields'] = empty($this->parameters['fields']) ? $fields : ($this->parameters['fields'] . ',' . $fields);
 
 		return $this;
 	}
