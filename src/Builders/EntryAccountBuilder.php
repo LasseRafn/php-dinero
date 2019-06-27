@@ -32,6 +32,6 @@ class EntryAccountBuilder extends Builder
             return new $this->model($request, $item);
         }, $jsonResponse);
 
-        return ['items' => $items];
+        return (object)['items' => $items];
     }
 }
