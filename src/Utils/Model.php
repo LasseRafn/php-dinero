@@ -69,7 +69,7 @@ class Model
     public function delete()
     {
         // todo test
-        return $this->request->curl->delete("/{$this->entity}/{$this->{$this->primaryKey}}");
+        return $this->request->curl->delete("{$this->entity}/{$this->{$this->primaryKey}}");
     }
 
     /**
@@ -81,8 +81,9 @@ class Model
      */
     public function update($data = [])
     {
-        // todo test
-        $response = $this->request->curl->put("/{$this->entity}/{$this->{$this->primaryKey}}", [
+        $data = array_merge($this->toArray(), $data);
+
+        $response = $this->request->curl->put("{$this->entity}/{$this->{$this->primaryKey}}", [
             'json' => $data,
         ]);
 

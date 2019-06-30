@@ -13,7 +13,7 @@ use LasseRafn\Dinero\Utils\Request;
 
 class Builder
 {
-	private   $request;
+    protected $request;
 	protected $entity;
 	protected $responseClass  = PaginatedResponse::class;
 
