@@ -64,7 +64,7 @@ class RequestBuilderTest extends TestCase
 
         $this->builder->select('id');
 
-        $this->assertEquals(['id'], $this->builder->getSelectedFields());
+        $this->assertEquals('id', $this->builder->getSelectedFields());
     }
 
     /** @test */
@@ -74,7 +74,7 @@ class RequestBuilderTest extends TestCase
 
         $this->builder->select(['id', 'name']);
 
-        $this->assertEquals(['id', 'name'], $this->builder->getSelectedFields());
+        $this->assertEquals('id,name', $this->builder->getSelectedFields());
     }
 
     /** @test */
