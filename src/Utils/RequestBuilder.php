@@ -11,6 +11,7 @@ class RequestBuilder
 
 	protected $parameters = [];
 	protected $dateFormat = 'Y-m-d';
+    protected $dateTimeFormat = 'Y-m-d\TH:m:s\Z';
 
 	public function __construct( Builder $builder ) {
 		$this->parameters['page']     = 0;
@@ -99,7 +100,7 @@ class RequestBuilder
 	 * @return $this
 	 */
 	public function since( \DateTime $date ) {
-		$this->parameters['changesSince'] = $date->format( $this->dateFormat );
+        $this->parameters['changesSince'] = $date->format($this->dateTimeFormat);
 
 		return $this;
 	}
