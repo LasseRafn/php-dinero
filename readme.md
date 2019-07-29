@@ -25,7 +25,7 @@ composer require lasserafn/php-dinero
 
 ### Getting started
 
-1. [Apply as a developer](https://api.dinero.dk/apply) at Dinero
+1. [Apply as a developer](https://api.dinero.dk/docs#apply) at Dinero
 
 2. Get your client id and secret
 
