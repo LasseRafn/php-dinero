@@ -19,10 +19,10 @@ class Request
 
         if ($token !== null) {
             $headers['Authorization'] = "Bearer {$token}";
-            $headers['Content-Type'] = 'application/json';
+            $headers['Content-Type'] = 'application/json; charset=utf8';
         } else {
             $headers['Authorization'] = "Basic {$encodedClientIdAndSecret}";
-            $headers['Content-Type'] = 'application/x-www-form-urlencoded';
+            $headers['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf8';
         }
 
         $this->curl = new Client(array_merge_recursive([
