@@ -4,6 +4,7 @@ namespace LasseRafn\Dinero;
 
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
+use LasseRafn\Dinero\Builders\BookingBuilder;
 use LasseRafn\Dinero\Builders\ContactBuilder;
 use LasseRafn\Dinero\Builders\CreditnoteBuilder;
 use LasseRafn\Dinero\Builders\DepositAccountBuilder;
@@ -14,6 +15,7 @@ use LasseRafn\Dinero\Builders\ProductBuilder;
 use LasseRafn\Dinero\Builders\PurchaseVoucherBuilder;
 use LasseRafn\Dinero\Exceptions\DineroRequestException;
 use LasseRafn\Dinero\Exceptions\DineroServerException;
+use LasseRafn\Dinero\Requests\BookingRequestBuilder;
 use LasseRafn\Dinero\Requests\ContactRequestBuilder;
 use LasseRafn\Dinero\Requests\CreditnoteRequestBuilder;
 use LasseRafn\Dinero\Requests\DepositAccountRequestBuilder;
@@ -102,6 +104,11 @@ class Dinero
 	public function paymentsForInvoice($invoiceId)
 	{
 		return new PaymentRequestBuilder(new PaymentBuilder($this->request, "invoices/{$invoiceId}/payments"));
+	}
+
+	public function bookInvoice($invoiceId)
+	{
+		return new BookingRequestBuilder(new BookingBuilder($this->request, "invoices/{$invoiceId}/book"));
 	}
 
     public function products()
